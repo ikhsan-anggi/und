@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Wedding of Anggi & Ikhsan" />
+<meta property="og:description" content="Sabtu, 10 Januari 2026 — Kami mengundang Anda untuk hadir di hari bahagia kami." />
+<meta property="og:url" content="https://ikhsan-anggi.github.io/undangan/" />
+<meta property="og:image" content="https://ikhsan-anggi.github.io/undangan/preview.jpg" />
+<meta property="og:image:secure_url" content="https://ikhsan-anggi.github.io/undangan/preview.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+<!-- Primary Meta -->
+<title>Undangan Pernikahan Ikhsan & Anggi</title>
+<meta name="description" content="Sabtu, 10 Januari 2025 | Undangan Pernikahan Ikhsan & Anggi">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Undangan Pernikahan Ikhsan & Anggi</title>
 
-<link rel="preload" as="image" href="assets/images/cover.jpg">
 <link rel="preload" as="audio" href="assets/audio/your-music.mp3">
-<link rel="preload" as="style" href="style.css">
-<link rel="preload" as="script" href="script.js">
+
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
@@ -19,6 +35,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    /* Ubah dari overflow: hidden; agar animasi transisi bekerja dengan baik */
     overflow: auto; 
 }
 
@@ -28,88 +45,136 @@ body {
     height: 100vh;
     width: 100%;
     overflow: hidden;
+    /* Tambahan: Pastikan elemen ini berada di atas elemen lain saat transisi */
     z-index: 99; 
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out; 
 }
 
-/* Background tetap diam */
+/* KEYFRAMES untuk Transisi (BARU DITAMBAHKAN) */
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh); /* Geser ke atas keluar layar */
+        opacity: 0;
+    }
+}
+
+/* Kelas yang ditambahkan JavaScript saat tombol diklik (BARU DITAMBAHKAN) */
+.cover.is-closed {
+    animation: slideOut 0.9s ease-in-out forwards; /* Durasi animasi 0.9 detik */
+}
+
+/* Background blur only */
 .cover::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: url('assets/images/cover.jpg') center/cover no-repeat; 
-    filter: brightness(1);
-    transform: scale(1.05);
+    background:
+      linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url('assets/images/cover.webp') center/cover no-repeat;
+    filter: blur(1px) brightness(0.95);
+    transform: scale(1.1);
+    z-index: -2;
+}
+.cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(70, 80, 105, 0.5);
+    backdrop-filter: blur(2px);
     z-index: -1;
 }
 
-/* Konten kiri bawah */
-/* Konten kiri bawah */
 .content {
+    padding-top: 5vh;
     position: absolute;
-    bottom: 5vh;
-    left: 0vw;
-    right: 0vw;
+    inset: 0;
     z-index: 2;
-    text-align: left;
-    
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(0.87px);
-    border-radius: 12px;
-    padding: 15px 20px;
-    display: block;
 
-    /* Mulai tanpa animasi */
-    transform: translateY(0);
-    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    background: none;
+    backdrop-filter: none;
+
+    padding: 24px;
+    transform: translateY(12vh);
+}
+.content h1 {
+    position: absolute;
+    top: 14vh; /* naikkan posisi */
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    color: #ffff;
+    text-align: center;
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 6px rgba(255,255,255,0.2),
+        0 0 12px rgba(180,200,255,0.2),
+        0 0 20px rgba(120,160,255,0.2);
 }
 
-/* Animasi keyframes untuk overlay */
-@keyframes slideUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-120vh); opacity: 0; }
+
+
+
+.to {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
 }
 
-/* Kelas yang akan ditambahkan via JS saat klik tombol */
-.content.slide-up {
-    animation: slideUp 0.8s ease-in-out forwards;
-}
-
-
-.to { margin: 0 0 5px 0; font-size: 1.15rem; color: #fff; }
 
 #guestNameWrapper {
-    display: inline-block;
-    padding: 0.6vw 1vw;
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255,255,255,0.4);
-    backdrop-filter: blur(3px);
-    border-radius: 12px;
-    margin-bottom: 4px;
+    padding: 10px 18px;
+    background: rgba(180, 205, 235, 0.35); /* soft blue */
+    border: 1px solid rgba(200, 220, 245, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 12px rgba(160, 190, 230, 0.35);
 }
 
-#guestName { font-weight: 700; font-size: 1.25rem; color: #fff; display: block; }
-#guestNote { font-style: italic; font-size: 0.85rem; color: #e0e0e0; margin-top: 2px; }
+
+#guestName {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+#guestNote {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 18px;
+}
+
 
 .content h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,5vw,2rem); color: #f0f4fa; margin: 10px 0 0 0; }
 
 .button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    background-color: #cbd5e1;
+    background-color: rgba(255,255,255,0.9);
     color: #1e3a8a;
-    padding: 0.5rem 0.9rem;
+    padding: 0.55rem 1rem;
     border-radius: 28px;
-    text-decoration: none;
-    cursor: pointer;
     font-weight: 600;
     font-size: 0.9rem;
-    margin-top: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
+    margin-top: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.button:hover {
+    background-color: #ffffff;
 }
 
-.button:hover { background-color: #bfcad6; }
 
 /* RESPONSIVE */
 @media (max-width:768px){
@@ -134,8 +199,8 @@ body {
         <div id="guestNote">*mohon maaf apabila salah dalam penulisan nama/gelar</div>
         <h1>You're Invited to Our Wedding</h1>
         <a class="button" onclick="openInvitation()">
-            <i class="fa-solid fa-envelope-open"></i> Buka Undangan
-        </a>
+  <i class="fa-solid fa-envelope-open"></i> Buka Undangan
+</a>
     </div>
 </div>
 
@@ -153,7 +218,7 @@ function openInvitation() {
   coverContent.classList.add("slide-up"); // trigger animasi slide-up
 
   setTimeout(() => {
-    window.location.href = "index.html"; // pindah ke index.html setelah animasi
+    window.location.href = "home.html"; // pindah ke home.html setelah animasi
   }, 800); // durasi animasi sama seperti CSS
 }
 
@@ -161,10 +226,6 @@ function openInvitation() {
 // Update posisi saat load dan resize
 window.addEventListener('load', updateNamePosition);
 window.addEventListener('resize', updateNamePosition);
-
-function updateNamePosition() {
-    // bisa isi sesuai logika asli kamu
-}
 </script>
 </body>
 </html>

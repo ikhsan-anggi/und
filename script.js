@@ -313,4 +313,3 @@ function copyGift(number) {
     toast.classList.remove("show");
   }, 2000);
 }
-
